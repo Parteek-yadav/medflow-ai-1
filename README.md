@@ -177,6 +177,7 @@ Start backend first, then run:
 ```bash
 streamlit run streamlit_app.py
 ```
+Final improvements and UI polishing
 
 ## Optional: Run Sample Emergency Cases
 ```bash
