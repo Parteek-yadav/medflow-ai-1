@@ -43,6 +43,15 @@ The system uses focused agents coordinated by a workflow orchestrator:
 4. Safety checks applied  
 5. Result returned (`alert` or `ok`)
 
+{additional way to run }
+1. open two split terminal
+2. in terminal 1 RUN - cd "C:\Users\parte\OneDrive\Desktop\ET hackathon"
+py -m pip install -r requirements.txt
+
+Then in again in terminal 1 RUN - py -m uvicorn main:app --reload
+
+Then without closing terminal 1 , in terminal 2 RUN - py -m streamlit run streamlit_app.py
+
 ## Setup Instructions
 ### 1) Clone or open the project
 ```bash
@@ -89,87 +98,7 @@ Useful endpoints:
 - `POST /api/process`
 - Swagger docs: `http://127.0.0.1:8000/docs`
 
-## Example Request/Response
-### Request
-`POST /api/process`
 
-```json
-{
-  "text": "58-year-old male with sudden chest pain radiating to left arm, diaphoresis, and shortness of breath."
-}
-```
-
-### Response (example)
-```json
-{
-  "status": "ok",
-  "soap_note": {
-    "subjective": "Patient reports acute central chest pain radiating to left arm with associated diaphoresis and dyspnea.",
-    "objective": "Objective exam and complete vital set not fully provided in source text.",
-    "assessment": "Acute chest pain syndrome requiring urgent evaluation; cardiac etiology must be considered.",
-    "plan": "Recommend immediate emergency assessment, ECG, cardiac biomarkers, monitoring, and clinician review."
-  },
-  "diagnoses": [
-    {
-      "diagnosis": "Acute coronary syndrome",
-      "reason": "Typical ischemic symptom pattern with radiation and autonomic symptoms.",
-      "confidence": "high"
-    },
-    {
-      "diagnosis": "Pulmonary embolism",
-      "reason": "Chest discomfort with dyspnea can represent thromboembolic disease in differential.",
-      "confidence": "medium"
-    },
-    {
-      "diagnosis": "Aortic dissection",
-      "reason": "Life-threatening cause of chest pain that should be considered in acute presentation.",
-      "confidence": "low"
-    }
-  ],
-  "safety": {
-    "risk_level": "medium",
-    "issues": [
-      "Vital signs are missing or incomplete."
-    ],
-    "warnings": [
-      "A potentially high-acuity diagnosis has low confidence; urgent exclusion may still be necessary."
-    ]
-  },
-  "audit_trail": [
-    {
-      "step": "input_received",
-      "output": "58-year-old male with sudden chest pain radiating to left arm, diaphoresis, and shortness of breath."
-    },
-    {
-      "step": "documentation",
-      "output": {
-        "subjective": "...",
-        "objective": "...",
-        "assessment": "...",
-        "plan": "..."
-      }
-    },
-    {
-      "step": "diagnosis",
-      "output": [
-        {
-          "diagnosis": "...",
-          "reason": "...",
-          "confidence": "..."
-        }
-      ]
-    },
-    {
-      "step": "safety",
-      "output": {
-        "risk_level": "...",
-        "issues": [],
-        "warnings": []
-      }
-    }
-  ]
-}
-```
 
 ## Optional: Run Streamlit UI
 Start backend first, then run:
